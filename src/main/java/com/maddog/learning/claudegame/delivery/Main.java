@@ -56,6 +56,12 @@ public class Main {
             testWeight = weight + packages[i];
 
             if(testWeight < maxLoad){
+                if(i == packages.length - 1){ // 如果為最後一趟，直接出發
+                    count++;
+
+                    break;
+                }
+
                 // 裝貨
                 weight = testWeight;
 
@@ -64,12 +70,11 @@ public class Main {
                 // 維持原樣出發，下一趟車清空
                 count++;
                 weight = 0;
-
-                System.out.printf("第%d台：5, 3 → 合計 8（再放 8 會超重，換車）");
             } else { // 剛好等於上限
                 // 裝貨出發
                 count++;
                 i++;
+                weight = 0;
             }
         }
 
