@@ -314,7 +314,6 @@ public class InformixToOracleSQLVerification {
             yml.load(input);
 
             log.info("============================> {} yml 格式正確！", systemName);
-            throw new Exception();
         } catch (Exception e) {
             log.error("驗證 {} yml 發生錯誤: ", systemName, e);
         }
