@@ -87,11 +87,6 @@ public class InformixToOracleSQLVerification {
      */
     private static final String LOST_SQL = "SQL 為空";
 
-    /**
-     * txt Log description "失敗與成功總和與總列數不相符，請確認是否空列"
-     */
-    private static final String COUNT_FAILED = "失敗與成功總和與總列數不相符，請確認是否空列";
-
     public static void main(String[] args) {
         // 使用者輸入 excel 檔所在資料夾 與 yml 輸出資料夾 路徑
         Scanner scanner = new Scanner(System.in);
@@ -127,8 +122,8 @@ public class InformixToOracleSQLVerification {
                 // 讀取 excel 轉換成 yml
                 Path resultPath = transform(source, targetDir);
 
-                // 驗證 yml 檔是否合法
                 if (resultPath != null) {
+                    // 驗證 yml 檔是否合法
                     verifyYml(resultPath);
                 } else {
                     log.warn("transform 失敗回傳 null ，跳過驗證步驟！");
@@ -279,7 +274,7 @@ public class InformixToOracleSQLVerification {
             resultPath = targetDir.resolve(systemName + ".yml");
             // 輸出結果 yml 檔
             Files.writeString(resultPath, result.toString(), StandardCharsets.UTF_8);
-            log.info("============================> yml 輸出完成！");
+            log.info("============================> {} yml 輸出完成！", systemName);
 
             // 統計成功失敗與總數
             total = success + failed;
@@ -293,7 +288,7 @@ public class InformixToOracleSQLVerification {
                 resultLogPath = targetDir.resolve(systemName + "_exception.txt");
                 // 輸出錯誤結果 txt 檔
                 Files.writeString(resultLogPath, resultLog.toString(), StandardCharsets.UTF_8);
-                log.info("============================> txt 輸出完成！");
+                log.info("============================> {} txt 輸出完成！",  systemName);
             }
         } catch (Exception e) {
             log.error("轉換失敗: ", e);
@@ -309,15 +304,19 @@ public class InformixToOracleSQLVerification {
      *          yml 檔路徑
      */
     private static void verifyYml(Path ymlPath) {
+        // 取得系統名
+        String systemName = ymlPath.getFileName().toString().split("\\.")[0];
+
         try (InputStream input = Files.newInputStream(ymlPath)) {
             Yaml yml = new Yaml();
 
             // 讀取成功為格式正確
             yml.load(input);
 
-            log.info("============================> yml 格式正確！");
+            log.info("============================> {} yml 格式正確！", systemName);
+            throw new Exception();
         } catch (Exception e) {
-            log.error("驗證 yml 發生錯誤: ", e);
+            log.error("驗證 {} yml 發生錯誤: ", systemName, e);
         }
     }
 
