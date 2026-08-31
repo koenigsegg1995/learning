@@ -18,9 +18,7 @@
  */
 package com.maddog.learning.claudegame.checkout;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Main {
 
@@ -37,35 +35,19 @@ public class Main {
      */
     public static int checkout(int[] prices) {
         int total = 0;
-        List<Integer> team = new ArrayList<>();
 
         // 重新排列價格
         Arrays.sort(prices);
 
         for(int i = prices.length - 1; i >= 0; i--){
-            team.add(prices[i]);
-
-            // 集滿一組
-            if(team.size() == 3){
-                int teamTotal = getTeamTotal(team);
-
-                total += teamTotal - team.get(2);
-
-                team.clear();
-            } else if (i == 0){
-                int teamTotal = getTeamTotal(team);
-
-                total += teamTotal;
+            if((prices.length - i) % 3 == 0){
+                continue;
             }
+
+            total += prices[i];
         }
 
         return total;
-    }
-
-    private static int getTeamTotal(List<Integer> team){
-        return team.stream()
-                .mapToInt(Integer::intValue)
-                .sum();
     }
 
 }
