@@ -16,22 +16,22 @@ public class SmallLight {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // 原始檔位置
+        // 原始檔路徑字串
         String oriStr;
+        // 原始檔路徑
+        Path oriPath;
         // 最大筆數
         int limit;
         // 輸入流
         BufferedReader oriData;
 
-        while(true) {
+        while (true) {
             System.out.println("請輸入檔案路徑: ");
 
-            if (sc.hasNext()) {
-                oriStr = sc.next();
+            // 有需入字串且為合法路徑
+            if (sc.hasNext() && Files.isRegularFile(oriPath = Path.of(oriStr = sc.next()))) {
 
                 log.info("檔案路徑: {}", oriStr);
-
-                Path.of(oriStr);
             } else {
                 System.out.println("輸入檔案錯誤！");
 
