@@ -24,7 +24,7 @@ package com.maddog.learning.claudegame.parking;
 public class Main {
 
     public static void main(String[] args) {
-
+        System.out.printf("停車費為: %d\n", calculate(60, 90));
     }
 
     /**
@@ -37,7 +37,29 @@ public class Main {
      * @return 停車費
      */
     public static int calculate(int entryMinute, int exitMinute) {
+        // 停車費
+        int result = 30;
 
+        // 計算停車時間
+        int totalMinutes = exitMinute - entryMinute;
+        int totalHours = (int) Math.ceil(totalMinutes / 60.0);
+
+        if(--totalHours > 0){ // 先扣除第一個小時，如果大於 0 代表停超過一小時
+            if(totalHours >= 3){ // 剩餘超過 3 小時
+                // 第 2 ~ 4 小時
+                result += 60;
+
+                // 扣除第 2 ~ 4 小時
+                totalHours -= 3;
+
+                // 後續小時
+                result += totalHours * 10;
+            } else {
+                result += totalHours * 20;
+            }
+        }
+
+        return Math.min(result, 200);
     }
 
 }
