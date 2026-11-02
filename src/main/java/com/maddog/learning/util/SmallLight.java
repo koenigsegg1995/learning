@@ -1,4 +1,4 @@
-package com.maddog.learning.claudegame;
+package com.maddog.learning.util;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -10,6 +10,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
 
+/**
+ * 將資料筆數縮減
+ */
 @Slf4j
 public class SmallLight {
 
